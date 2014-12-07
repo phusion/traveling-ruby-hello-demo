@@ -39,11 +39,10 @@ end
 def create_package(target)
   package_dir = "#{PACKAGE_NAME}-#{VERSION}-#{target}"
   sh "rm -rf #{package_dir}"
-  sh "mkdir #{package_dir}"
-  sh "mkdir #{package_dir}/app"
-  sh "cp hello.rb #{package_dir}/app/"
-  sh "mkdir #{package_dir}/runtime"
-  sh "tar -xzf packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-#{target}.tar.gz -C #{package_dir}/runtime"
+  sh "mkdir -p #{package_dir}/lib/app"
+  sh "cp hello.rb #{package_dir}/lib/app/"
+  sh "mkdir #{package_dir}/lib/ruby"
+  sh "tar -xzf packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-#{target}.tar.gz -C #{package_dir}/lib/ruby"
   sh "cp packaging/wrapper.sh #{package_dir}/hello"
   if !ENV['DIR_ONLY']
     sh "tar -czf #{package_dir}.tar.gz #{package_dir}"
